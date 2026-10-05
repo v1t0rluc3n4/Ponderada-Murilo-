@@ -75,7 +75,7 @@ Os 6 testes passaram de primeira (testando alinhamento temporal, hash de integri
 
 ---
 
-## 6. Teste local e o pesadelo do Docker (16h08 as 16h30)
+## 6. Teste local e o pesadelo do Docker (16h08 as 16h28)
 
 * Subi a API local no Uvicorn na porta 8000. O cliente chamou e recebeu HTTP 200 com a previsao de **USD 87.703,54** para **01/01/2026** (usando os fechamento de 25/12/2025 ate 31/12/2025). Os teste de smoke tb deram certo.
 * Montei dois Dockerfiles e o `compose.yaml`. O container de treino salva em `/app/artifacts` e a API le essa pasta como `:ro` (read-only).
