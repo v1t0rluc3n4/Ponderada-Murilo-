@@ -1,0 +1,9 @@
+.git
+.venv
+__pycache__
+**/__pycache__
+data/raw
+btc_source.csv
+docs/evidencias
+*.zip
+.docker-local

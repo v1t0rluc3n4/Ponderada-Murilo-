@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="650" viewBox="0 0 1280 650" role="img" aria-labelledby="title desc">
+<title id="title">UML de implantação e componentes da previsão de Bitcoin</title>
+<desc id="desc">CSV é lido pelo container de treinamento. O modelo e seus metadados são gravados na pasta artifacts do host e montados somente para leitura no container FastAPI. O cliente envia sete preços e uma data por HTTP e recebe a previsão.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0 L9 3 L0 6" fill="none" stroke="#334155"/></marker></defs>
+<rect width="1280" height="650" fill="#fff"/>
+<g font-family="Arial, sans-serif" fill="#172033">
+<text x="40" y="42" font-size="24" font-weight="bold">Previsão BTC/USD — UML de implantação e componentes</text>
+<g fill="#f1f5f9" stroke="#334155" stroke-width="2">
+<rect x="40" y="110" width="210" height="100"/>
+<rect x="330" y="95" width="310" height="155"/>
+<rect x="750" y="95" width="430" height="155"/>
+<rect x="750" y="360" width="430" height="150"/>
+<rect x="330" y="385" width="270" height="110"/>
+</g>
+<g font-size="17" text-anchor="middle">
+<text x="145" y="140">«artifact»</text><text x="145" y="168" font-weight="bold">CSV histórico</text><text x="145" y="192">data/btc_daily.csv</text>
+<text x="485" y="125">«executionEnvironment»</text><text x="485" y="154" font-weight="bold" font-size="16">Treino: Docker ou notebook</text>
+<rect x="352" y="170" width="266" height="60" fill="white" stroke="#334155"/>
+<text x="485" y="195">«component» training.train</text><text x="485" y="218">pandas + LinearRegression</text>
+<text x="965" y="125">«artifact» pasta compartilhada</text><text x="965" y="154" font-weight="bold">artifacts no host</text>
+<text x="965" y="184">model.joblib + metadata.json</text><text x="965" y="213">metrics.json + test_predictions.csv</text>
+<text x="965" y="388">«executionEnvironment»</text><text x="965" y="417" font-weight="bold">Container de inferência</text>
+<rect x="775" y="430" width="380" height="58" fill="white" stroke="#334155"/>
+<text x="965" y="455">«component» FastAPI — backend.app</text><text x="965" y="478">GET /health · POST /predict</text>
+<text x="465" y="416">«component»</text><text x="465" y="447" font-weight="bold">Cliente Python</text><text x="465" y="475">client/predict.py</text>
+</g>
+<g fill="none" stroke="#334155" stroke-width="2" marker-end="url(#arrow)">
+<path d="M250 162 L330 162"/><path d="M640 162 L750 162"/><path d="M965 250 L965 360"/>
+<path d="M600 425 L750 425"/><path d="M750 480 L600 480"/>
+</g>
+<g font-size="14">
+<text x="257" y="149">leitura</text><text x="650" y="149">exportação</text>
+<text x="980" y="289">bind mount somente leitura</text><text x="980" y="311">carrega e confere na inicialização</text>
+<text x="610" y="396">HTTP POST</text><text x="610" y="414">7 preços + data</text><text x="610" y="503">JSON: preço + data</text>
+</g>
+<path d="M40 550 L650 550 L670 570 L670 625 L40 625 Z" fill="#fff8df" stroke="#a16207"/>
+<path d="M650 550 L650 570 L670 570" fill="none" stroke="#a16207"/>
+<g font-size="16"><text x="56" y="578">Entradas: fechamentos D-6 até D. Alvo: fechamento D+1.</text><text x="56" y="603">80% mais antigos para treino; 20% mais recentes para teste.</text></g>
+<text x="750" y="570" font-size="16">O treinamento termina depois de exportar.</text><text x="750" y="598" font-size="16">O backend permanece ativo e não treina novamente.</text>
+</g></svg>

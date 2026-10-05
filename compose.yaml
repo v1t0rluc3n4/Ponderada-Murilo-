@@ -1,0 +1,23 @@
+services:
+  training:
+    build:
+      context: .
+      dockerfile: training/Dockerfile
+    volumes:
+      - ./artifacts:/app/artifacts
+    profiles: ["train"]
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./artifacts:/app/artifacts:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

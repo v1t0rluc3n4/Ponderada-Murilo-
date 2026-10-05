@@ -1,0 +1,12 @@
+{
+  "linear_regression": {
+    "mae_usd": 1518.282399469047,
+    "rmse_usd": 2013.7607131244888
+  },
+  "last_close_baseline": {
+    "mae_usd": 1480.2293577981652,
+    "rmse_usd": 1968.3752159651085
+  },
+  "train_examples": 871,
+  "test_examples": 218
+}

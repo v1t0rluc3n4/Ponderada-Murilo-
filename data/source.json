@@ -1,0 +1,16 @@
+{
+  "source_url": "https://www.cryptodatadownload.com/cdd/Bitstamp_BTCUSD_d.csv",
+  "exchange": "Bitstamp",
+  "symbol": "BTC/USD",
+  "frequency": "daily",
+  "date_convention": "Data UTC de abertura do candle diário; close é o fechamento desse candle.",
+  "prepared_at_utc": "2026-10-05T17:50:27.049138+00:00",
+  "source_rows": 4329,
+  "invalid_rows_in_source": 0,
+  "duplicate_dates_in_period": 0,
+  "rows": 1096,
+  "start": "2023-01-01",
+  "end": "2025-12-31",
+  "source_sha256": "530249c71df1eed15a26e2104d5920645165b23abf1dc98fb09585568489c215",
+  "csv_sha256": "2d32b28f02a29e136155815502129c3bdf58f604294e781c0031dc72464cfd24"
+}

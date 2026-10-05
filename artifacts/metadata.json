@@ -1,0 +1,32 @@
+{
+  "model": "LinearRegression",
+  "symbol": "BTC-USD",
+  "currency": "USD",
+  "window": 7,
+  "horizon_days": 1,
+  "input_order": "oldest_to_newest",
+  "features": [
+    "close_lag_6",
+    "close_lag_5",
+    "close_lag_4",
+    "close_lag_3",
+    "close_lag_2",
+    "close_lag_1",
+    "close_lag_0"
+  ],
+  "data_start": "2023-01-01",
+  "data_end": "2025-12-31",
+  "train_target_start": "2023-01-08",
+  "train_target_end": "2025-05-27",
+  "test_target_start": "2025-05-28",
+  "test_target_end": "2025-12-31",
+  "trained_at_utc": "2026-10-05T18:07:38.661392+00:00",
+  "csv_sha256": "2d32b28f02a29e136155815502129c3bdf58f604294e781c0031dc72464cfd24",
+  "model_sha256": "7e0a33dd09dc54f8dd1b59fae2f4222917dac1e09cab965687d660495c9899c4",
+  "python_version": "3.12.14",
+  "sklearn_version": "1.7.2",
+  "pandas_version": "2.3.3",
+  "numpy_version": "2.2.6",
+  "joblib_version": "1.5.2",
+  "refit_on_all_data": false
+}

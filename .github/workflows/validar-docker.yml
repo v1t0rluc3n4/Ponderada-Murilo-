@@ -1,0 +1,53 @@
+name: Validar containers
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Instalar dependências dos testes
+        run: python -m pip install -r requirements.lock.txt
+      - name: Treinar e testar em Docker
+        run: |
+          set -euo pipefail
+          mkdir -p docs/evidencias
+          docker compose --profile train build 2>&1 | tee docs/evidencias/build-docker.txt
+          docker compose --profile train run --rm training 2>&1 | tee docs/evidencias/treino-docker.txt
+          docker compose up -d --wait backend
+          docker compose ps | tee docs/evidencias/containers.txt
+          python client/predict.py | tee docs/evidencias/cliente-docker.txt
+          python tests/smoke.py | tee docs/evidencias/http-docker.txt
+          python -m unittest discover -s tests -v 2>&1 | tee docs/evidencias/testes-docker.txt
+          docker compose restart backend
+          docker compose up -d --wait backend
+          python tests/smoke.py | tee docs/evidencias/http-docker-reinicio.txt
+      - name: Registrar logs
+        if: always()
+        run: docker compose logs --no-color backend > docs/evidencias/backend-docker.txt 2>&1
+      - name: Guardar evidências
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: evidencias-docker
+          path: |
+            docs/evidencias/*docker*.txt
+            docs/evidencias/containers.txt
+            artifacts/
+          retention-days: 30
+      - name: Encerrar serviços
+        if: always()
+        run: docker compose down

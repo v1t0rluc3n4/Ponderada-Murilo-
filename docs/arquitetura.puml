@@ -1,0 +1,35 @@
+@startuml
+title Previsão de fechamento BTC/USD - componentes e implantação
+left to right direction
+artifact "CSV histórico\ndata/btc_daily.csv" as csv
+node "Treinamento: Docker ou notebook\nPython 3.12" as training {
+  component "training.train\npandas + LinearRegression" as trainer
+}
+folder "Pasta artifacts no host\nbind mount" as shared {
+  artifact "model.joblib" as model
+  artifact "metadata.json" as metadata
+  artifact "metrics.json" as metrics
+}
+node "Container de inferência\nPython 3.12" as inference {
+  component "FastAPI\nbackend.app" as api
+}
+component "Cliente Python\nclient/predict.py" as client
+csv --> trainer : leitura dos fechamentos
+trainer --> model : exportação com joblib
+trainer --> metadata : contrato e hash
+trainer --> metrics : avaliação temporal
+model --> api : bind mount somente leitura\ncarregamento na inicialização
+metadata --> api : conferência do artefato
+client --> api : HTTP POST /predict\n7 preços + last_date
+api --> client : JSON com preço e data prevista
+note bottom of trainer
+80% dos exemplos mais antigos: treino
+20% mais recentes: teste
+Entradas D-6 até D; alvo D+1
+Notebook executado usa o mesmo script
+end note
+note bottom of api
+GET /health confirma prontidão
+O backend não executa treinamento
+end note
+@enduml
